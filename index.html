@@ -856,7 +856,7 @@
             border: 2px solid var(--primary);
         }
         .breath-btn.secondary:hover {
-            background: #c4c4c4;  
+            background: #c0b8d6;  
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(156, 136, 255, 0.3);
         }
@@ -938,7 +938,7 @@
             border: 2px solid var(--primary);
         }
         .journal-btn.secondary:hover {
-            background: #c4c4c4;  
+            background: #c0b8d6;  
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(156, 136, 255, 0.3);
         }
@@ -1049,7 +1049,7 @@
         }
 
         .btn-secondary:hover {
-            background: #c4c4c4;
+            background: #c0b8d6;
             transform: translateY(-3px);
         }
              .category-badges {
@@ -1143,7 +1143,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
+}
 
         .modal-close:hover {
             background: #f8f9fa;
@@ -1247,7 +1247,7 @@
         }
 
         .suggested-task:hover {
-            background: #c4c4c4;
+            background: #c0b8d6;
             transform: translateX(3px);
             border-left-color: var(--primary);
         }
@@ -1777,24 +1777,53 @@
             { id: 'productivity', name: 'Productivity', color: '#feca57', icon: '📊' }
         ];
 
-        // Suggested Tasks
-        const suggestedTasks = [
-            'Meditate for 10 minutes',
-            'Drink 8 glasses of water',
-            'Exercise for 30 minutes',
-            'Read for 20 minutes',
-            'Practice gratitude journaling',
-            'Take a mindful walk',
-            'Do breathing exercises',
-            'Stretch for 10 minutes',
-            'Connect with a friend',
-            'Spend time in nature',
-            'Practice yoga',
-            'Listen to calming music',
-            'Take a digital detox hour',
-            'Prepare a healthy meal',
-            'Get 8 hours of sleep'
-        ];
+        // Suggested Tasks by Category - EACH CATEGORY HAS ITS OWN SET
+        const suggestedTasks = {
+            'mind': [
+                'Meditate for 10 minutes',
+                'Read for 20 minutes',
+                'Learn something new today',
+                'Solve a puzzle or brain teaser',
+                'Practice a new language',
+                'Write down 3 things you learned today',
+                'Listen to an educational podcast',
+                'Practice mindfulness for 5 minutes',
+                'Do a brain training exercise'
+            ],
+            'body': [
+                'Drink 8 glasses of water',
+                'Exercise for 30 minutes',
+                'Take a mindful walk',
+                'Stretch for 10 minutes',
+                'Practice yoga',
+                'Go for a run or brisk walk',
+                'Do 20 minutes of strength training',
+                'Take the stairs instead of elevator',
+                'Get 8 hours of sleep'
+            ],
+            'emotional': [
+                'Practice gratitude journaling',
+                'Connect with a friend',
+                'Spend time in nature',
+                'Listen to calming music',
+                'Perform a random act of kindness',
+                'Write a letter to your future self',
+                'Watch a funny movie or show',
+                'Call a family member',
+                'Practice self-compassion affirmations'
+            ],
+            'productivity': [
+                'Organize your workspace',
+                'Plan your week ahead',
+                'Complete one procrastinated task',
+                'Set 3 achievable goals for today',
+                'Declutter one area of your home',
+                'Create a to-do list for tomorrow',
+                'Review your monthly goals',
+                'Clean your email inbox',
+                'Update your calendar'
+            ]
+        };
 
         // Journal Prompts
         const journalPrompts = [
@@ -1832,6 +1861,9 @@
 
         // App State - Will be loaded from user data
         let appState = null;
+        
+        // Current category for filtering suggested tasks in modal
+        let currentSuggestedCategory = 'all';
 
         // DOM Elements
         const authScreen = document.getElementById('auth-screen');
@@ -2080,36 +2112,106 @@
             });
         }
 
-        // Render categories
+        // Render categories in the modal with filtering capability
         function renderCategories() {
             categoryBadges.innerHTML = '';
             
+            // Add "All" category first
+            const allSpan = document.createElement('span');
+            allSpan.className = `category-badge ${currentSuggestedCategory === 'all' ? 'selected' : ''}`;
+            allSpan.setAttribute('data-category', 'all');
+            allSpan.innerHTML = '<i class="fas fa-layer-group"></i> All Categories';
+            categoryBadges.appendChild(allSpan);
+            
+            // Add each category
             taskCategories.forEach(category => {
                 const span = document.createElement('span');
-                span.className = 'category-badge';
+                span.className = `category-badge ${currentSuggestedCategory === category.id ? 'selected' : ''}`;
                 span.setAttribute('data-category', category.id);
                 span.innerHTML = `${category.icon} ${category.name}`;
                 categoryBadges.appendChild(span);
             });
             
-            // Select first category by default
-            if (document.querySelector('.category-badge')) {
-                document.querySelector('.category-badge').classList.add('selected');
+            // Select first category by default if none selected
+            if (currentSuggestedCategory === 'all') {
+                allSpan.classList.add('selected');
             }
         }
 
-        // Render suggested tasks
+        // Render suggested tasks filtered by category
         function renderSuggestedTasks() {
             suggestedTasksContainer.innerHTML = '';
             
-            // Show random suggested tasks
-            const shuffled = [...suggestedTasks].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 5);
+            let tasksToShow = [];
             
-            selected.forEach(task => {
+            if (currentSuggestedCategory === 'all') {
+                // Show at least one from each category
+                taskCategories.forEach(category => {
+                    const categoryTasks = suggestedTasks[category.id];
+                    if (categoryTasks && categoryTasks.length > 0) {
+                        // Pick a random task from this category
+                        const randomTask = categoryTasks[Math.floor(Math.random() * categoryTasks.length)];
+                        tasksToShow.push({
+                            text: randomTask,
+                            category: category.id
+                        });
+                    }
+                });
+                
+                // Add more random tasks to reach 5 total
+                const allTasks = [];
+                taskCategories.forEach(category => {
+                    if (suggestedTasks[category.id]) {
+                        suggestedTasks[category.id].forEach(task => {
+                            allTasks.push({
+                                text: task,
+                                category: category.id
+                            });
+                        });
+                    }
+                });
+                
+                // Shuffle and add more
+                const shuffled = [...allTasks].sort(() => 0.5 - Math.random());
+                while (tasksToShow.length < 5 && shuffled.length > 0) {
+                    const task = shuffled.pop();
+                    // Avoid duplicates
+                    if (!tasksToShow.some(t => t.text === task.text)) {
+                        tasksToShow.push(task);
+                    }
+                }
+            } else {
+                // Show tasks from selected category
+                const categoryTasks = suggestedTasks[currentSuggestedCategory];
+                if (categoryTasks && categoryTasks.length > 0) {
+                    // Show up to 5 tasks from this category
+                    const shuffled = [...categoryTasks].sort(() => 0.5 - Math.random());
+                    const selected = shuffled.slice(0, 5);
+                    
+                    selected.forEach(task => {
+                        tasksToShow.push({
+                            text: task,
+                            category: currentSuggestedCategory
+                        });
+                    });
+                }
+            }
+            
+            if (tasksToShow.length === 0) {
+                suggestedTasksContainer.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: var(--gray);">
+                        <i class="fas fa-lightbulb" style="font-size: 24px; margin-bottom: 10px;"></i>
+                        <p>No suggested tasks available for this category</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            tasksToShow.forEach(task => {
                 const div = document.createElement('div');
                 div.className = 'suggested-task';
-                div.textContent = task;
+                div.textContent = task.text;
+                div.setAttribute('data-category', task.category);
                 suggestedTasksContainer.appendChild(div);
             });
         }
@@ -2774,6 +2876,10 @@
         addTaskBtn.addEventListener('click', () => {
             addTaskModal.classList.add('active');
             taskInput.focus();
+            // Reset to "All" categories when opening modal
+            currentSuggestedCategory = 'all';
+            renderCategories();
+            renderSuggestedTasks();
         });
 
         closeTaskModal.addEventListener('click', () => {
@@ -2783,7 +2889,7 @@
 
         saveTaskBtn.addEventListener('click', () => {
             const taskText = taskInput.value.trim();
-            const selectedCategory = document.querySelector('.category-badge.selected');
+            const selectedCategory = document.querySelector('.category-badge.selected:not([data-category="all"])');
             
             if (!taskText) {
                 alert('Please enter a task description.');
@@ -2808,18 +2914,39 @@
             updateUI();
         });
 
+        // Category badges in modal - filter suggested tasks when clicked
         categoryBadges.addEventListener('click', (e) => {
             if (e.target.classList.contains('category-badge')) {
+                const category = e.target.getAttribute('data-category');
+                
+                // Update selected category for filtering
+                currentSuggestedCategory = category;
+                
+                // Update UI
                 document.querySelectorAll('.category-badge').forEach(badge => {
                     badge.classList.remove('selected');
                 });
                 e.target.classList.add('selected');
+                
+                // Re-render suggested tasks based on selected category
+                renderSuggestedTasks();
             }
         });
 
         suggestedTasksContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('suggested-task')) {
                 taskInput.value = e.target.textContent;
+                
+                // Auto-select the corresponding category if not "All"
+                const category = e.target.getAttribute('data-category');
+                if (category !== 'all') {
+                    document.querySelectorAll('.category-badge').forEach(badge => {
+                        badge.classList.remove('selected');
+                        if (badge.getAttribute('data-category') === category) {
+                            badge.classList.add('selected');
+                        }
+                    });
+                }
             }
         });
 
