@@ -990,9 +990,10 @@
             margin-bottom: 5px;
         }
 
-        .flower-day {
+        .flower-number {
             font-size: 11px;
             color: var(--gray);
+            font-weight: 600;
         }
 
         .garden-empty {
@@ -2216,7 +2217,7 @@
             });
         }
 
-        // Render garden
+        // Render garden with flower numbers instead of day numbers
         function renderGarden() {
             gardenGrid.innerHTML = '';
             
@@ -2234,15 +2235,18 @@
                 return;
             }
             
+            // Sort flowers by ID (sequential order)
+            const sortedFlowers = completedFlowers.sort((a, b) => a.id - b.id);
+            
             // Show only the most recent 12 flowers
-            const recentFlowers = completedFlowers.slice(-12).reverse();
+            const recentFlowers = sortedFlowers.slice(-12).reverse();
             
             recentFlowers.forEach(flower => {
                 const div = document.createElement('div');
                 div.className = 'garden-flower';
                 div.innerHTML = `
                     <div class="flower-emoji">${flowerEmojis[flower.petals] || '🌸'}</div>
-                    <div class="flower-day">Day ${flower.dayStarted}</div>
+                    <div class="flower-number">Flower ${flower.id}</div>
                 `;
                 div.style.backgroundColor = flower.color + '20';
                 div.setAttribute('data-flower-id', flower.id);
