@@ -1,149 +1,161 @@
 # Bloom Wellness Tracker
 
-Bloom Wellness Tracker is a gamified, interactive web application that helps users track their mental wellness journey through the metaphor of growing flowers. Complete tasks, track your mood, journal, and practice breathing exercises to grow a virtual garden of flowers.
+Bloom Wellness Tracker is an interactive front-end web application designed to support daily wellness habits through task management, mood tracking, journaling, breathing exercises, and a flower-based visual progress system.
+
+The application uses the metaphor of growing flowers to encourage consistency and positive routines.
+
+Live demo: https://marija192.github.io/Bloom-Wellness/
 
 ---
 
 ## Features
 
 ### Flower Growth System
-- Start each day with a seedling.
-- Complete 5 tasks to earn petals.
-- Collect 5 petals to bloom a flower and add it to your garden.
-- Visual flower animations show your progress.
-- Each flower has a consistent color theme for all petals.
+- Start each day with a new seedling
+- Complete five tasks to earn petals
+- Collect five petals to fully bloom a flower
+- Completed flowers are added to a personal garden
+- Each flower has a consistent color theme and visual state
+
+---
 
 ### Task Management
-- Add custom daily tasks with categories: Mind, Body, Emotional, Productivity.
-- Suggested tasks for inspiration.
-- Mark tasks as completed with checkboxes.
-- Daily progress bar shows task completion.
+- Create custom daily tasks
+- Task categories:
+  - Mind
+  - Body
+  - Emotional
+  - Productivity
+- Suggested tasks for inspiration
+- Mark tasks as completed
+- Daily progress bar reflects task completion
+
+---
 
 ### Mood Tracking
-- Six mood options with color-coded labels.
-- Track daily mood trends and gain insights over time.
+- Select one mood per day from predefined options
+- Mood is saved locally and displayed in the interface
+
+---
 
 ### Breathing Exercises
-- Guided 4-7-8 breathing technique (inhale-hold-exhale).
-- Animated breathing circle with timer and instructions.
+- Guided 4–7–8 breathing exercise
+- Visual breathing animation with timer and instructions
+- Start and reset controls
+
+---
 
 ### Daily Journal
-- Random daily prompts for reflection.
-- Save entries with date and mood tags.
-- View past journal entries and trends.
+- Random daily prompts for reflection
+- Save daily journal entries locally
+- View past entries in a history modal
+
+---
 
 ### Flower Garden
-- Collection of all completed flowers.
-- Each flower shows unique color and creation date.
-- Click to view detailed statistics.
+- Displays all completed flowers
+- Flowers show visual state and completion order
+- Clicking a flower opens a details view
 
-### Progress Statistics
-- Day counter and streak tracking.
-- Total petals earned and tasks completed.
+---
+
+### Progress Tracking
+- Current day counter
+- Daily streak tracking
+- Total petals earned
+- Total tasks completed
+
+---
 
 ### User Management
-- Local user accounts with persistent storage.
-- Secure login/signup system.
-- Individual progress saved per user.
+- Local user accounts stored in the browser
+- Login and signup functionality
+- Individual progress saved per user using local storage
+
+> Note: This is a front-end–only application. Authentication is not secure and passwords are stored in plain text for demonstration purposes only.
 
 ---
 
 ## Getting Started
 
 ### Prerequisites
-- No installation required.
-- Works in any modern web browser.
+- No installation required
+- Runs in any modern web browser
 
 ### Usage
-1. Open `index.html` in a browser.
-2. Create an account or log in.
-3. Start tracking your wellness journey and grow your garden.
+1. Open `index.html` in a browser
+2. Create an account or log in
+3. Begin tracking daily tasks and wellness activities
 
 ---
 
 ## Architecture
 
 ### Frontend
-- **HTML5**: Semantic structure  
-- **CSS3**: Custom variables, responsive design, animations  
-- **Vanilla JavaScript**: No frameworks required  
+- **HTML5** – semantic page structure  
+- **CSS3** – custom variables, responsive layout, animations  
+- **Vanilla JavaScript** – no external frameworks  
 
 ### Data Storage
-- **Local Storage**: All user data persists locally  
-- **Offline Ready**: Fully functional without internet  
+- **Browser LocalStorage**
+- All application data is stored locally
+- Fully functional offline after initial load
 
 ### Key Components
-- `UserManager` class handles authentication and user state.
-- App state management for tasks, flowers, and journal entries.
-- Interactive UI with real-time updates and visual feedback.
+- `UserManager` class for handling users and application state
+- Centralized app state for tasks, flowers, mood, and journal entries
+- Dynamic UI updates based on user interaction
 
 ---
 
 ## Design Principles
 
-- **Color Palette**  
-  - Primary: Purple (#9c88ff)  
-  - Secondary: Pink (#ff9ff3), Blue (#54a0ff)  
-  - Success: Green (#1dd1a1)  
-  - Background: Soft gradient for calm experience  
+### Visual Design
+- Calm color palette with soft gradients
+- Consistent spacing and rounded UI elements
+- Clear visual feedback for progress and interaction
 
-- **Responsive Design**  
-  - Mobile-first, touch-friendly, works on all screen sizes  
+### Responsive Design
+- Mobile-friendly layout
+- Adaptable grid system for different screen sizes
 
-- **Animations**  
-  - Smooth transitions, task completion effects, flower progress animations  
-
----
-
-## PWA Features
-- Installable as a Progressive Web App
-- Consistent theme and responsive on all devices
+### Animations
+- Smooth transitions
+- Visual feedback for task completion and flower growth
 
 ---
 
-## Technical Details
-
-- **Data Structure:** Encrypted user data, tasks linked to specific days, flowers track petal colors and dates, journal entries tagged with mood.
-- **Key Functions:**  
-  - `createNewFlower()`: Generate a new flower  
-  - `addPetalToFlower()`: Add petals and trigger celebrations  
-  - `checkStreak()`: Calculate activity streaks  
-  - `updateUI()`: Sync UI with current state  
-
-- **Customization:**  
-  - Add new task categories, moods, flower colors, journal prompts via arrays in JavaScript  
-  - Modify CSS variables for colors, breakpoints, and animation effects  
+## Progressive Web App (PWA)
+- Installable as a PWA
+- Responsive across desktop and mobile devices
+- Theme color and manifest configuration included
 
 ---
 
-## Testing & Compatibility
-
-- **Browsers Supported:** Chrome 60+, Firefox 55+, Safari 12+, Edge 79+  
-- **Offline Capabilities:** Fully functional after initial load  
-- **Tips:** Clear browser cache if login issues occur
-
----
-
-## Contributing
-
-- Fork the repository  
-- Create a feature branch  
-- Make improvements  
-- Submit a pull request  
+## Limitations
+- No backend or database
+- No encrypted authentication
+- Data is lost if browser storage is cleared
+- Intended as a demonstration and learning project
 
 ---
 
-## Acknowledgments
-- Icons: Font Awesome  
-- Color palette: Inspired by nature and wellness  
-- Breathing exercises: 4-7-8 technique  
-- Design: Positive psychology and gamification principles  
+## Future Improvements
+- Backend authentication and database support
+- Secure password handling
+- Cross-device data synchronization
+- Mood and progress analytics
+- Notifications and reminders
+
+---
+
+## Author
+
+Marija  
+Computer Science Student
 
 ---
 
 ## License
-Personal and educational use. Modify as needed for your wellness tracking.
 
----
-
-Bloom Wellness Tracker makes self-care interactive, rewarding, and visually engaging. Start growing your wellness garden today.
+This project was created for educational and portfolio purposes.
