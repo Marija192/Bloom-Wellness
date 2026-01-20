@@ -39,7 +39,7 @@ Live demo: https://marija192.github.io/Bloom-Wellness/
 ---
 
 ### Breathing Exercises
-- Guided 4–7–8 breathing exercise
+- Guided 4–5–7 breathing exercise
 - Visual breathing animation with timer and instructions
 - Start and reset controls
 
