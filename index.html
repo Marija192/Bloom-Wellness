@@ -1856,8 +1856,8 @@
         let breathingTimeLeft = 0;
         const breathingPattern = {
             inhale: 4,
-            hold: 7,
-            exhale: 8
+            hold: 5,
+            exhale: 7
         };
 
         // App State - Will be loaded from user data
@@ -2510,14 +2510,14 @@
                     breathText = 'Inhale';
                     break;
                 case 'hold':
-                    instruction = 'Hold... (7 sec)';
+                    instruction = 'Hold... (6 sec)';
                     circleColor = '#0984e3';
                     circleScale = 1.5;
                     breathingTimerEl.textContent = breathingTimeLeft;
                     breathText = 'Hold';
                     break;
                 case 'exhale':
-                    instruction = 'Breathe Out... Slowly (8 sec)';
+                    instruction = 'Breathe Out... Slowly (7 sec)';
                     circleColor = '#e17055';
                     circleScale = 1.2 - (breathingTimeLeft / breathingPattern.exhale) * 0.3;
                     breathingTimerEl.textContent = breathingTimeLeft;
